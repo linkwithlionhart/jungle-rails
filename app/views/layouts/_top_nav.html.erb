@@ -65,6 +65,11 @@
           <%= link_to cart_path, class: "nav-link " do %> <%= fa_icon "shopping-cart" %>
           My Cart (<%= cart.size %>) <% end %>
         </li>
+        <% if logged_in? %>
+            <li>
+              <%= link_to 'Logout', logout_path, class:"nav-link", method: :delete %>
+            </li>
+        <% end %>
       </ul>
     </div>
   </div>
