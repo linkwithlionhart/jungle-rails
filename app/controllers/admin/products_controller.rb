@@ -1,6 +1,6 @@
 class Admin::ProductsController < ApplicationController
 
-  before_action :authorize_admin only: [:index]
+  # before_action :authorize_admin only: [:index]
 
   def index
     @products = Product.order(id: :desc).all
