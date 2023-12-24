@@ -140,6 +140,34 @@ RSpec.describe User, type: :model do
       authenticated_user = User.authenticate_with_credentials('TEST@example.com', 'password')
       expect(authenticated_user).to eq(user)
     end
+
+    # Example 6: Authenticate user with leading/trailing spaces in email
+    it 'authenticates successfully with email containing leading/trailing spaces' do
+      user = User.create(
+        email: 'test@example.com',
+        password: 'password',
+        password_confirmation: 'password',
+        first_name: 'John',
+        last_name: 'Doe'
+      )
+
+      authenticated_user = User.authenticate_with_credentials('  test@example.com  ', 'password')
+      expect(authenticated_user).to eq(user)
+    end
+
+    # Example 7: Authenticate user with case-insensitive email
+    it 'authenticates successfully with case-insensitive email' do
+      user = User.create(
+        email: 'test@example.com',
+        password: 'password',
+        password_confirmation: 'password',
+        first_name: 'John',
+        last_name: 'Doe'
+      )
+
+      authenticated_user = User.authenticate_with_credentials('TEST@example.com', 'password')
+      expect(authenticated_user).to eq(user)
+    end
   end # 2nd describe block
 
 end # outer-most

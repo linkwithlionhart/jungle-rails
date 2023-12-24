@@ -12,4 +12,9 @@ class User < ApplicationRecord
     BCrypt::Password.new(password_digest).is_password?(password)
   end
 
+  def self.authenticate_with_credentials(email, password)
+    user = find_by(email: email.strip.downcase)
+    user if user && user.authenticate(password)
+  end
+
 end
