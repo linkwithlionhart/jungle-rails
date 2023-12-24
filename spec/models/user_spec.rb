@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  
   describe 'Validations' do
     # Example 1: Ensure a user is valid with valid attributes
     it 'is valid with valid attributes' do
@@ -24,14 +25,14 @@ RSpec.describe User, type: :model do
         last_name: 'Doe'
       )
       user.valid?
-      expect(user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      expect(user.errors.full_messages).to include("Password confirmation doesn't match Password.")
     end
 
     # Example 3: Validate presence of email, first name, and last name
     it 'is not valid without required fields' do
       user = User.new
       user.valid?
-      expect(user.errors.full_messages).to include("Email can't be blank", "Password can't be blank", "First name can't be blank", "Last name can't be blank")
+      expect(user.errors.full_messages).to include("Email can't be blank.", "Password can't be blank.", "First name can't be blank.", "Last name can't be blank.")
     end
 
     # Example 4: Validate uniqueness of email (case-insensitive)
@@ -52,8 +53,21 @@ RSpec.describe User, type: :model do
         last_name: 'Doe'
       )
       user.valid?
-      expect(user.errors.full_messages).to include("Email has already been taken")
+      expect(user.errors.full_messages).to include("Email has already been taken.")
     end
-    
+
+    # Example 5: Validate minimum length of the password
+    it "is not valid with a password less than the minimum length" do 
+      user = User.new(
+        email: 'test@example.com',
+        password: 'short',
+        password_confirmation: 'short',
+        first_name: 'John',
+        last_name: 'Doe'
+      )
+      user.valid?
+      expect(user.errors.full_messages).to include("Password is too short. Minimum is 12 characters.")
+    end
+
   end # describe block
 end # outer-most
